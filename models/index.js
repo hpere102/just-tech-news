@@ -1,10 +1,18 @@
-const User = require('./User');
+// import all models
 const Post = require('./Post');
+const User = require('./User');
 const Vote = require('./Vote');
 const Comment = require('./Comment');
 
-
 // create associations
+User.hasMany(Post, {
+  foreignKey: 'user_id'
+});
+
+Post.belongsTo(User, {
+  foreignKey: 'user_id'
+});
+
 User.belongsToMany(Post, {
   through: Vote,
   as: 'voted_posts',
@@ -48,6 +56,5 @@ User.hasMany(Comment, {
 Post.hasMany(Comment, {
   foreignKey: 'post_id'
 });
-
 
 module.exports = { User, Post, Vote, Comment };
